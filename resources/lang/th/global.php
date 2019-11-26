@@ -249,4 +249,12 @@ return [
     'no_alerts'                            => 'No alerts',
     'calendar'                             => 'ปฏิทิน',
     'messenger'                            => 'ตัวส่งข้อความ',
+    'user_fullname'                        => 'ชื่อ และ นามสกุล',
+    'pleaseSelectGender'                   => 'กรุณาเลือกเพศ',
+    'pleaseSelectTeam'                   => 'กรุณาเลือกหน่วยงาน',
+    'pleaseSelectPosition'                   => 'กรุณาเลือกตำแหน่งงาน',
+    'dob'                                  => 'วัน/เดือน/ปี เกิด',
+    'workphone'                            => 'เบอร์โทรศัพท์ที่สามารถติดต่อได้',
+    'task_name'                            => 'หัวข้องาน : ',
+    'responsible'                          => 'ผู้รับผิดชอบ : '
 ];

@@ -249,4 +249,13 @@ return [
     'no_alerts'                            => 'No alerts',
     'calendar'                             => 'Calendar',
     'messenger'                            => 'Messenger',
+    'user_fullname'                        => 'First name and Last name',
+    'pleaseSelectGender'                   => 'Please select Gender',
+    'pleaseSelectTeam'                   => 'Please select your Team',
+    'pleaseSelectPosition'                   => 'Please select Position',
+    'dob'                                  => 'Date of birth',
+    'workphone'                            => 'Phone number',
+    'task_name'                            => 'Task name : ',
+    'responsible'                          => 'Responsible : '
+    
 ];

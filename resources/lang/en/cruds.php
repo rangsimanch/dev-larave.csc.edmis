@@ -77,6 +77,9 @@ return [
             'team_helper'              => '',
             'jobtitle'                 => 'Jobtitle',
             'jobtitle_helper'          => '',
+            'user_create'        => 'User Create',
+            'user_create_helper' => '',
+
         ],
     ],
     'jobtitle'               => [
@@ -349,6 +352,8 @@ return [
             'end_date_helper'    => '',
             'team'               => 'Team',
             'team_helper'        => '',
+            'user_create'       =>  'User Create',
+            'user_create_helper'       =>  '',
         ],
     ],
     'tasksCalendar'          => [

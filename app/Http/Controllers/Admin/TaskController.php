@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Task;
 use App\TaskStatus;
 use App\TaskTag;
+use App\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,7 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Task::with(['status', 'tags', 'team'])->select(sprintf('%s.*', (new Task)->table));
+            $query = Task::with(['status', 'tags', 'user_create', 'team'])->select(sprintf('%s.*', (new Task)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -42,6 +43,23 @@ class TaskController extends Controller
                     'crudRoutePart',
                     'row'
                 ));
+            });
+            
+            
+            $table->addColumn('user_create_name', function ($row) {
+                return $row->user_create ? $row->user_create->name : '';
+            });
+            
+            $table->addColumn('img_user', function ($row) {
+                if ($photo = $row->user_create->img_user) {
+                    return sprintf(
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
+                }
+
+                return '';
             });
 
             $table->editColumn('id', function ($row) {
@@ -71,7 +89,8 @@ class TaskController extends Controller
                 return $row->attachment ? '<a href="' . $row->attachment->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'status', 'tag', 'attachment']);
+
+            $table->rawColumns(['actions', 'placeholder','img_user' , 'status', 'tag', 'attachment', 'user_create']);
 
             return $table->make(true);
         }
@@ -87,16 +106,21 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
+
         return view('admin.tasks.create', compact('statuses', 'tags'));
     }
 
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::create($request->all());
-        $task->tags()->sync($request->input('tags', []));
-
+        $task = $request->all();
+        $task['user_create_id'] = auth()->id();
+        Task::create($task);
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
+        }
+
+        if ($request->input('img_user', false)) {
+            $task->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
         }
 
         return redirect()->route('admin.tasks.index');
@@ -112,11 +136,14 @@ class TaskController extends Controller
 
         $task->load('status', 'tags', 'team');
 
+        $task['user_create_id'] = auth()->id();
+
         return view('admin.tasks.edit', compact('statuses', 'tags', 'task'));
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
+        $task['user_create_id'] = auth()->id();
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
 
@@ -135,7 +162,7 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $task->load('status', 'tags', 'team');
+        $task->load('status', 'tags', 'user_create', 'team');
 
         return view('admin.tasks.show', compact('task'));
     }

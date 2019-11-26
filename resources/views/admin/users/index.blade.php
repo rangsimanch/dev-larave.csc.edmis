@@ -25,9 +25,9 @@
                     <th width="10">
 
                     </th>
-                    <th>
+                    <!-- <th>
                         {{ trans('cruds.user.fields.id') }}
-                    </th>
+                    </th> -->
                     <th>
                         {{ trans('cruds.user.fields.img_user') }}
                     </th>
@@ -116,7 +116,7 @@
     ajax: "{{ route('admin.users.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
+//{ data: 'id', name: 'id' },
 { data: 'img_user', name: 'img_user', sortable: false, searchable: false },
 { data: 'name', name: 'name' },
 { data: 'dob', name: 'dob' },

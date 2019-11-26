@@ -136,8 +136,6 @@ class RfaController extends Controller
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $create_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -150,12 +148,16 @@ class RfaController extends Controller
 
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rfas.create', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses'));
+        return view('admin.rfas.create', compact('types', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses'));
     }
 
     public function store(StoreRfaRequest $request)
     {
-        $rfa = Rfa::create($request->all());
+
+        $rfa = $request->all();
+        $rfa['create_by_id'] = auth()->id();
+
+        Rfa::create($rfa);
 
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
@@ -174,8 +176,6 @@ class RfaController extends Controller
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $create_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -189,12 +189,16 @@ class RfaController extends Controller
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status');
+        $rfa['create_by_id'] = auth()->id();
 
         return view('admin.rfas.edit', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses', 'rfa'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
+        $rfa = $request->all();
+        $rfa['create_by_id'] = auth()->id();
+
         $rfa->update($request->all());
 
         if (count($rfa->file_upload_1) > 0) {

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobtitle;
 use App\User;
+use App\Team;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -67,6 +69,24 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'workphone' => $data['workphone'],
+            'gender' => $data['gender'],
+            'team_id' => $data['team_id'],
+            'jobtitle_id' => $data['jobtitle_id'],
+            'dob'   =>$data['dob'],
         ]);
+    }
+
+    
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $teams = Team::all();;
+        $jobtitles = Jobtitle::all();
+        return view('auth.register',compact('teams','jobtitles'));
     }
 }

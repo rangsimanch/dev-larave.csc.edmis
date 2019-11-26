@@ -1,11 +1,19 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card mx-4">
             <div class="card-body p-4">
-                <h1>{{ trans('panel.site_title') }}</h1>
-
+            
+            <div class="row justify-content-center">
+            <br>
+            <img src="/images/CSC-logo.png" style="height:150px; width:150px;">
+            <br>
+            </div>
+            <div class="row justify-content-center">
+            <h1>{{ trans('panel.site_title') }}</h1>
+            </div>
                 <p class="text-muted">{{ trans('global.login') }}</p>
 
                 @if(session('status'))
