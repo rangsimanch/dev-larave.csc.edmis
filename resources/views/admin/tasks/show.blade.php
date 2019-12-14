@@ -85,14 +85,6 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.task.fields.user_create') }}
-                        </th>
-                        <td>
-                            {{ $task->user_create->name ?? '' }}
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

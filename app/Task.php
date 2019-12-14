@@ -39,7 +39,6 @@ class Task extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'description',
-        'user_create_id',
     ];
 
     public static function boot()
@@ -66,24 +65,36 @@ class Task extends Model implements HasMedia
 
     public function getDueDateAttribute($value)
     {
+<<<<<<< HEAD
         return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
 
         //return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+=======
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+>>>>>>> parent of 9634a6b... sprint1
     }
 
     public function setDueDateAttribute($value)
     {
+<<<<<<< HEAD
       //  $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
 
         $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
 
+=======
+        $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+>>>>>>> parent of 9634a6b... sprint1
     }
 
     public function getEndDateAttribute($value)
     {
+<<<<<<< HEAD
         return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
 
        // return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+=======
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+>>>>>>> parent of 9634a6b... sprint1
     }
 
     public function setEndDateAttribute($value)
@@ -96,6 +107,7 @@ class Task extends Model implements HasMedia
         return $this->getMedia('attachment')->last();
     }
 
+<<<<<<< HEAD
     public function user_create()
     {
         return $this->belongsTo(User::class, 'user_create_id');
@@ -106,6 +118,8 @@ class Task extends Model implements HasMedia
         return $this->belongsToMany(Indenture::class);
     }
 
+=======
+>>>>>>> parent of 9634a6b... sprint1
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

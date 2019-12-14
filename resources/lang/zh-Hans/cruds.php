@@ -77,8 +77,11 @@ return [
             'team_helper'              => '',
             'jobtitle'                 => 'Jobtitle',
             'jobtitle_helper'          => '',
+<<<<<<< HEAD
             'indenture'                => 'Indenture',
             'indenture_helper'         => '',
+=======
+>>>>>>> parent of 9634a6b... sprint1
         ],
     ],
     'jobtitle'               => [
@@ -355,10 +358,13 @@ return [
             'end_date_helper'    => '',
             'team'               => 'Team',
             'team_helper'        => '',
+<<<<<<< HEAD
             'user_create'        => 'User Create',
             'user_create_helper' => '',
             'indenture'          => 'Indenture',
             'indenture_helper'   => '',
+=======
+>>>>>>> parent of 9634a6b... sprint1
         ],
     ],
     'tasksCalendar'          => [

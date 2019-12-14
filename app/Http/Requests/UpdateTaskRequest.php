@@ -32,14 +32,20 @@ class UpdateTaskRequest extends FormRequest
             'tags'           => [
                 'array',
             ],
+<<<<<<< HEAD
             'due_date'       => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+=======
+            'due_date'  => [
+                'date_format:' . config('panel.date_format'),
+>>>>>>> parent of 9634a6b... sprint1
                 'nullable',
             ],
             'end_date'       => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
+<<<<<<< HEAD
             'user_create_id' => [
                 'integer',
             ],
@@ -49,6 +55,8 @@ class UpdateTaskRequest extends FormRequest
             'indentures'     => [
                 'array',
             ],
+=======
+>>>>>>> parent of 9634a6b... sprint1
         ];
     }
 }

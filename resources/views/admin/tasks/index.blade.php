@@ -6,6 +6,10 @@
             <a class="btn btn-success" href="{{ route("admin.tasks.create") }}">
                 {{ trans('global.add') }} {{ trans('cruds.task.title_singular') }}
             </a>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                {{ trans('global.app_csvImport') }}
+            </button>
+            @include('csvImport.modal', ['model' => 'Task', 'route' => 'admin.tasks.parseCsvImport'])
         </div>
     </div>
 @endcan
@@ -21,20 +25,9 @@
                     <th width="10">
 
                     </th>
-
                     <th>
-                        {{ trans('cruds.user.fields.img_user') }}
-                    </th>
-
-                    
-                    <th>
-                        {{ trans('cruds.task.fields.user_create') }}
-                    </th>
-
-                    <!-- <th>
                         {{ trans('cruds.task.fields.id') }}
-                    </th> -->
-
+                    </th>
                     <th>
                         {{ trans('cruds.task.fields.name') }}
                     </th>
@@ -111,10 +104,7 @@
     ajax: "{{ route('admin.tasks.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'img_user', name: 'img_user', sortable: false, searchable: false },
-//{ data: 'id', name: 'id' },
-{ data: 'user_create_name', name: 'user_create.name' },
-
+{ data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'description', name: 'description' },
 { data: 'status_name', name: 'status.name' },

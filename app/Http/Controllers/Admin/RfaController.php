@@ -147,6 +147,8 @@ class RfaController extends Controller
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $create_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -159,15 +161,22 @@ class RfaController extends Controller
 
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+<<<<<<< HEAD
         $indentures = Indenture::all()->pluck('code', 'id');
 
         return view('admin.rfas.create', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses', 'indentures'));
+=======
+        return view('admin.rfas.create', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses'));
+>>>>>>> parent of 9634a6b... sprint1
     }
 
     public function store(StoreRfaRequest $request)
     {
         $rfa = Rfa::create($request->all());
+<<<<<<< HEAD
         $rfa->indentures()->sync($request->input('indentures', []));
+=======
+>>>>>>> parent of 9634a6b... sprint1
 
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
@@ -186,6 +195,8 @@ class RfaController extends Controller
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $create_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -198,17 +209,24 @@ class RfaController extends Controller
 
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+<<<<<<< HEAD
         $indentures = Indenture::all()->pluck('code', 'id');
 
         $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'indentures', 'team');
         $rfa['create_by_id'] = auth()->id();
+=======
+        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status');
+>>>>>>> parent of 9634a6b... sprint1
 
         return view('admin.rfas.edit', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses', 'indentures', 'rfa'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
+<<<<<<< HEAD
         $rfa['create_by_id'] = auth()->id();
+=======
+>>>>>>> parent of 9634a6b... sprint1
         $rfa->update($request->all());
         $rfa->indentures()->sync($request->input('indentures', []));
 

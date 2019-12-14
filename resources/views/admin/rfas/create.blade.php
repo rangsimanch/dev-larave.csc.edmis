@@ -125,6 +125,7 @@
                     {{ trans('cruds.rfa.fields.file_upload_1_helper') }}
                 </p>
             </div>
+<<<<<<< HEAD
 
             <div class="form-group">
                 <label for="indentures">{{ trans('cruds.rfa.fields.indenture') }}</label>
@@ -152,6 +153,21 @@
 
             <!-- CSC IN ZONE -->
             @can('rfa_document_csc_in')
+=======
+            <div class="form-group {{ $errors->has('create_by_id') ? 'has-error' : '' }}">
+                <label for="create_by">{{ trans('cruds.rfa.fields.create_by') }}</label>
+                <select name="create_by_id" id="create_by" class="form-control select2">
+                    @foreach($create_bies as $id => $create_by)
+                        <option value="{{ $id }}" {{ (isset($rfa) && $rfa->create_by ? $rfa->create_by->id : old('create_by_id')) == $id ? 'selected' : '' }}>{{ $create_by }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('create_by_id'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('create_by_id') }}
+                    </em>
+                @endif
+            </div>
+>>>>>>> parent of 9634a6b... sprint1
             <div class="form-group {{ $errors->has('action_by_id') ? 'has-error' : '' }}">
                 <label for="action_by">{{ trans('cruds.rfa.fields.action_by') }}</label>
                 <select name="action_by_id" id="action_by" class="form-control select2">

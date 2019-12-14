@@ -95,10 +95,6 @@ return [
 
     'fallback_locale' => 'en',
 
-    /* Fix Show Image Storage:link*/ 
-    
-    'file_path' => env('FILE_PATH', '/'),
-    
     /*
     |--------------------------------------------------------------------------
     | Faker Locale

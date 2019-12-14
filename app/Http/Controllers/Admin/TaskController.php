@@ -12,7 +12,6 @@ use App\Indenture;
 use App\Task;
 use App\TaskStatus;
 use App\TaskTag;
-use App\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +24,11 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
+<<<<<<< HEAD
             $query = Task::with(['status', 'tags', 'user_create', 'indentures', 'team'])->select(sprintf('%s.*', (new Task)->table));
+=======
+            $query = Task::with(['status', 'tags', 'team'])->select(sprintf('%s.*', (new Task)->table));
+>>>>>>> parent of 9634a6b... sprint1
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -45,6 +48,7 @@ class TaskController extends Controller
                     'row'
                 ));
             });
+<<<<<<< HEAD
 
             $table->addColumn('img_user', function ($row) {
                 if ($photo = $row->user_create->img_user) {
@@ -57,6 +61,8 @@ class TaskController extends Controller
 
                 return '';
             });
+=======
+>>>>>>> parent of 9634a6b... sprint1
 
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
@@ -88,12 +94,16 @@ class TaskController extends Controller
                 return $row->user_create ? $row->user_create->name : '';
             });
 
+<<<<<<< HEAD
             $table->editColumn('indenture', function ($row) {
                 $labels = [];
 
                 foreach ($row->indentures as $indenture) {
                     $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $indenture->code);
                 }
+=======
+            $table->rawColumns(['actions', 'placeholder', 'status', 'tag', 'attachment']);
+>>>>>>> parent of 9634a6b... sprint1
 
                 return implode(' ', $labels);
             });
@@ -118,6 +128,7 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request)
     {
+<<<<<<< HEAD
         $task = $request->all();
         $task['user_create_id'] = auth()->id();
         $task->tags()->sync($request->input('tags', []));
@@ -126,14 +137,21 @@ class TaskController extends Controller
 
         Task::create($task);
         
+=======
+        $task = Task::create($request->all());
+        $task->tags()->sync($request->input('tags', []));
+>>>>>>> parent of 9634a6b... sprint1
 
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
         }
 
+<<<<<<< HEAD
         if ($request->input('img_user', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
         }
+=======
+>>>>>>> parent of 9634a6b... sprint1
         return redirect()->route('admin.tasks.index');
     }
 
@@ -145,18 +163,21 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
+<<<<<<< HEAD
         $task['user_create_id'] = auth()->id();
 
         $task->load('status', 'tags', 'user_create', 'indentures', 'team');
         
        
+=======
+        $task->load('status', 'tags', 'team');
+>>>>>>> parent of 9634a6b... sprint1
 
         return view('admin.tasks.edit', compact('statuses', 'tags', 'task'));
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $task['user_create_id'] = auth()->id();
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
         $task->indentures()->sync($request->input('indentures', []));
@@ -176,7 +197,11 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+<<<<<<< HEAD
         $task->load('status', 'tags', 'user_create', 'indentures', 'team');
+=======
+        $task->load('status', 'tags', 'team');
+>>>>>>> parent of 9634a6b... sprint1
 
         return view('admin.tasks.show', compact('task'));
     }
