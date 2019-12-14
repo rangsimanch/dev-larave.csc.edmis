@@ -10,6 +10,7 @@ Route::get('/home', function () {
 });
 
 Auth::routes();
+// Admin
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -100,6 +101,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Rfa Calendars
     Route::resource('rfa-calendars', 'RfaCalendarController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
+    // Indentures
+    Route::delete('indentures/destroy', 'IndentureController@massDestroy')->name('indentures.massDestroy');
+    Route::post('indentures/parse-csv-import', 'IndentureController@parseCsvImport')->name('indentures.parseCsvImport');
+    Route::post('indentures/process-csv-import', 'IndentureController@processCsvImport')->name('indentures.processCsvImport');
+    Route::resource('indentures', 'IndentureController');
+
+    // File Managers
+    Route::delete('file-managers/destroy', 'FileManagerController@massDestroy')->name('file-managers.massDestroy');
+    Route::post('file-managers/media', 'FileManagerController@storeMedia')->name('file-managers.storeMedia');
+    Route::resource('file-managers', 'FileManagerController');
+
+    Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');
     Route::get('messenger/create', 'MessengerController@createTopic')->name('messenger.createTopic');

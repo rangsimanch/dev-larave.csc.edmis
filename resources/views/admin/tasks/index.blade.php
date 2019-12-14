@@ -50,15 +50,22 @@
                         {{ trans('cruds.task.fields.attachment') }}
                     </th>
                     <th>
+                        {{ trans('cruds.task.fields.user_create') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.task.fields.indenture') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
             </thead>
         </table>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent
@@ -112,6 +119,8 @@
 { data: 'due_date', name: 'due_date' },
 { data: 'end_date', name: 'end_date' },
 { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
+{ data: 'user_create_name', name: 'user_create.name' },
+{ data: 'indenture', name: 'indentures.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],

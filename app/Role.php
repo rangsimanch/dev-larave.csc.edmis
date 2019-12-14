@@ -24,9 +24,14 @@ class Role extends Model
         'deleted_at',
     ];
 
-    public function users()
+    public function rolesUsers()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function roleIndentures()
+    {
+        return $this->belongsToMany(Indenture::class);
     }
 
     public function permissions()

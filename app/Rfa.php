@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\Auditable;
+use App\Traits\MultiTenantModelTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,12 +13,18 @@ use Spatie\MediaLibrary\Models\Media;
 
 class Rfa extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait, Auditable;
+    use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
 
     public $table = 'rfas';
 
     protected $appends = [
         'file_upload_1',
+    ];
+
+    public static $searchable = [
+        'title',
+        'rfa_code',
+        'document_number',
     ];
 
     protected $dates = [
@@ -30,25 +37,26 @@ class Rfa extends Model implements HasMedia
 
     protected $fillable = [
         'title',
-        'note_2',
         'note_1',
         'note_3',
+        'note_2',
+        'team_id',
         'type_id',
         'rfa_code',
         'assign_id',
+        'deleted_at',
         'updated_at',
         'created_at',
-        'deleted_at',
         'issueby_id',
         'submit_date',
-        'receive_date',
         'action_by_id',
+        'receive_date',
         'create_by_id',
-        'for_status_id',
         'comment_by_id',
+        'for_status_id',
         'document_number',
-        'information_by_id',
         'comment_status_id',
+        'information_by_id',
         'document_status_id',
     ];
 
@@ -137,5 +145,15 @@ class Rfa extends Model implements HasMedia
     public function document_status()
     {
         return $this->belongsTo(RfaDocumentStatus::class, 'document_status_id');
+    }
+
+    public function indentures()
+    {
+        return $this->belongsToMany(Indenture::class);
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_id');
     }
 }

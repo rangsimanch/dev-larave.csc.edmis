@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Indenture;
 use App\Jobtitle;
 use App\Role;
 use App\Team;
@@ -24,7 +25,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = User::with(['team', 'jobtitle', 'roles'])->select(sprintf('%s.*', (new User)->table));
+            $query = User::with(['team', 'jobtitle', 'roles', 'indentures'])->select(sprintf('%s.*', (new User)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -93,8 +94,17 @@ class UsersController extends Controller
             $table->editColumn('approved', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
             });
+            $table->editColumn('indenture', function ($row) {
+                $labels = [];
 
-            $table->rawColumns(['actions', 'placeholder', 'img_user', 'team', 'jobtitle', 'roles', 'approved']);
+                foreach ($row->indentures as $indenture) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $indenture->code);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'img_user', 'team', 'jobtitle', 'roles', 'approved', 'indenture']);
 
             return $table->make(true);
         }
@@ -112,13 +122,16 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
 
-        return view('admin.users.create', compact('teams', 'jobtitles', 'roles'));
+        $indentures = Indenture::all()->pluck('code', 'id');
+
+        return view('admin.users.create', compact('teams', 'jobtitles', 'roles', 'indentures'));
     }
 
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
+        $user->indentures()->sync($request->input('indentures', []));
 
         if ($request->input('img_user', false)) {
             $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
@@ -137,15 +150,18 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
 
-        $user->load('team', 'jobtitle', 'roles');
+        $indentures = Indenture::all()->pluck('code', 'id');
 
-        return view('admin.users.edit', compact('teams', 'jobtitles', 'roles', 'user'));
+        $user->load('team', 'jobtitle', 'roles', 'indentures');
+
+        return view('admin.users.edit', compact('teams', 'jobtitles', 'roles', 'indentures', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
+        $user->indentures()->sync($request->input('indentures', []));
 
         if ($request->input('img_user', false)) {
             if (!$user->img_user || $request->input('img_user') !== $user->img_user->file_name) {
@@ -162,7 +178,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('team', 'jobtitle', 'roles');
+        $user->load('team', 'jobtitle', 'roles', 'indentures', 'issuebyRfas', 'assignRfas', 'createByRfas', 'actionByRfas', 'commentByRfas', 'informationByRfas', 'userCreateTasks', 'userUserAlerts');
 
         return view('admin.users.show', compact('user'));
     }

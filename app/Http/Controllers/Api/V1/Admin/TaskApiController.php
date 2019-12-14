@@ -20,21 +20,14 @@ class TaskApiController extends Controller
     {
         abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         return new TaskResource(Task::with(['status', 'tags', 'user_create', 'indentures', 'team'])->get());
-=======
-        return new TaskResource(Task::with(['status', 'tags', 'team'])->get());
->>>>>>> parent of 9634a6b... sprint1
-=======
-        return new TaskResource(Task::with(['status', 'tags', 'user_create', 'team'])->get());
->>>>>>> parent of 507f806... Indenture
     }
 
     public function store(StoreTaskRequest $request)
     {
         $task = Task::create($request->all());
         $task->tags()->sync($request->input('tags', []));
+        $task->indentures()->sync($request->input('indentures', []));
 
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
@@ -49,21 +42,14 @@ class TaskApiController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         return new TaskResource($task->load(['status', 'tags', 'user_create', 'indentures', 'team']));
-=======
-        return new TaskResource($task->load(['status', 'tags', 'team']));
->>>>>>> parent of 9634a6b... sprint1
-=======
-        return new TaskResource($task->load(['status', 'tags', 'user_create', 'team']));
->>>>>>> parent of 507f806... Indenture
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
+        $task->indentures()->sync($request->input('indentures', []));
 
         if ($request->input('attachment', false)) {
             if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {

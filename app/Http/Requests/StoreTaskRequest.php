@@ -19,42 +19,37 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => [
+            'name'           => [
                 'required',
             ],
-            'status_id' => [
+            'status_id'      => [
                 'required',
                 'integer',
             ],
-            'tags.*'    => [
+            'tags.*'         => [
                 'integer',
             ],
-            'tags'      => [
+            'tags'           => [
                 'array',
             ],
-            'due_date'  => [
+            'due_date'       => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'end_date'  => [
+            'end_date'       => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
-<<<<<<< HEAD
             'user_create_id' => [
+                'required',
                 'integer',
             ],
-<<<<<<< HEAD
             'indentures.*'   => [
                 'integer',
             ],
             'indentures'     => [
                 'array',
             ],
-=======
->>>>>>> parent of 9634a6b... sprint1
-=======
->>>>>>> parent of 507f806... Indenture
         ];
     }
 }

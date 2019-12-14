@@ -16,6 +16,10 @@ class AddRelationshipFieldsToTasksTable extends Migration
             $table->unsignedInteger('team_id')->nullable();
 
             $table->foreign('team_id', 'team_fk_631695')->references('id')->on('teams');
+
+            $table->unsignedInteger('user_create_id')->nullable();
+
+            $table->foreign('user_create_id', 'user_create_fk_635622')->references('id')->on('users');
         });
     }
 }

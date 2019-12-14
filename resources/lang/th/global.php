@@ -51,6 +51,7 @@ return [
     'youAreLoggedIn'                       => 'คุณไม่ได้ลงชื่อเข้าใช้',
     'yourAccountNeedsAdminApproval'        => 'แอคเค้าท์ของท่านต้องได้รับการอนุมัติจากผู้ดูแลระบบเพื่อลงชื่อเข้าใช้',
     'submit'                               => 'ยืนยัน',
+    'relatedData'                          => 'Related Data',
     'datatables'                           => [
         'copy'          => 'คัดลอก',
         'csv'           => 'CSV',
@@ -249,12 +250,4 @@ return [
     'no_alerts'                            => 'No alerts',
     'calendar'                             => 'ปฏิทิน',
     'messenger'                            => 'ตัวส่งข้อความ',
-    'user_fullname'                        => 'ชื่อ และ นามสกุล',
-    'pleaseSelectGender'                   => 'กรุณาเลือกเพศ',
-    'pleaseSelectTeam'                   => 'กรุณาเลือกหน่วยงาน',
-    'pleaseSelectPosition'                   => 'กรุณาเลือกตำแหน่งงาน',
-    'dob'                                  => 'วัน/เดือน/ปี เกิด',
-    'workphone'                            => 'เบอร์โทรศัพท์ที่สามารถติดต่อได้',
-    'task_name'                            => 'หัวข้องาน : ',
-    'responsible'                          => 'ผู้รับผิดชอบ : '
 ];
