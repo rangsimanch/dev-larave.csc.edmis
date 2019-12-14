@@ -85,6 +85,24 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.task.fields.user_create') }}
+                        </th>
+                        <td>
+                            {{ $task->user_create->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.task.fields.indenture') }}
+                        </th>
+                        <td>
+                            @foreach($task->indentures as $key => $indenture)
+                                <span class="label label-info">{{ $indenture->code }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -93,8 +111,9 @@
                 </a>
             </div>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection

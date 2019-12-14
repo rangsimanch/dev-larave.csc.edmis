@@ -73,10 +73,11 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent

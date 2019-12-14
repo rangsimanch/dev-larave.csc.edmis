@@ -93,15 +93,48 @@
                 <span class="help-block">{{ trans('cruds.task.fields.attachment_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="user_create_id">{{ trans('cruds.task.fields.user_create') }}</label>
+                <select class="form-control select2 {{ $errors->has('user_create') ? 'is-invalid' : '' }}" name="user_create_id" id="user_create_id" required>
+                    @foreach($user_creates as $id => $user_create)
+                        <option value="{{ $id }}" {{ old('user_create_id') == $id ? 'selected' : '' }}>{{ $user_create }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('user_create_id'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('user_create_id') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.task.fields.user_create_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="indentures">{{ trans('cruds.task.fields.indenture') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('indentures') ? 'is-invalid' : '' }}" name="indentures[]" id="indentures" multiple>
+                    @foreach($indentures as $id => $indenture)
+                        <option value="{{ $id }}" {{ in_array($id, old('indentures', [])) ? 'selected' : '' }}>{{ $indenture }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('indentures'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('indentures') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.task.fields.indenture_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
             </div>
         </form>
-
-
     </div>
 </div>
+
+
+
 @endsection
 
 @section('scripts')

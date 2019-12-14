@@ -7,7 +7,12 @@
     </div>
 
     <div class="card-body">
-        <div class="mb-2">
+        <div class="form-group">
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+            </div>
             <table class="table table-bordered table-striped">
                 <tbody>
                     <tr>
@@ -87,7 +92,11 @@
                             {{ trans('cruds.rfa.fields.file_upload_1') }}
                         </th>
                         <td>
-                            {{ $rfa->file_upload_1 }}
+                            @foreach($rfa->file_upload_1 as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                    {{ trans('global.view_file') }}
+                                </a>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
@@ -151,7 +160,7 @@
                             {{ trans('cruds.rfa.fields.note_3') }}
                         </th>
                         <td>
-                            {!! $rfa->note_3 !!}
+                            {{ $rfa->note_3 }}
                         </td>
                     </tr>
                     <tr>
@@ -170,14 +179,27 @@
                             {{ $rfa->document_status->status_name ?? '' }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.rfa.fields.indenture') }}
+                        </th>
+                        <td>
+                            @foreach($rfa->indentures as $key => $indenture)
+                                <span class="label label-info">{{ $indenture->code }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
-                {{ trans('global.back_to_list') }}
-            </a>
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+            </div>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection

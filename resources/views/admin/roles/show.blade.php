@@ -49,8 +49,33 @@
                 </a>
             </div>
         </div>
-
-
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#roles_users" role="tab" data-toggle="tab">
+                {{ trans('cruds.user.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#role_indentures" role="tab" data-toggle="tab">
+                {{ trans('cruds.indenture.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="roles_users">
+            @includeIf('admin.roles.relationships.rolesUsers', ['users' => $role->rolesUsers])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="role_indentures">
+            @includeIf('admin.roles.relationships.roleIndentures', ['indentures' => $role->roleIndentures])
+        </div>
+    </div>
+</div>
+
 @endsection

@@ -83,15 +83,19 @@
                         {{ trans('cruds.rfa.fields.document_status') }}
                     </th>
                     <th>
+                        {{ trans('cruds.rfa.fields.indenture') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
             </thead>
         </table>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent
@@ -156,6 +160,7 @@
 { data: 'note_3', name: 'note_3' },
 { data: 'for_status_name', name: 'for_status.name' },
 { data: 'document_status_status_name', name: 'document_status.status_name' },
+{ data: 'indenture', name: 'indentures.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],
