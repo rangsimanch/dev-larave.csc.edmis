@@ -47,49 +47,8 @@
                 </a>
             </div>
         </div>
+
+
     </div>
 </div>
-
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.relatedData') }}
-    </div>
-    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="#team_users" role="tab" data-toggle="tab">
-                {{ trans('cruds.user.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#team_tasks" role="tab" data-toggle="tab">
-                {{ trans('cruds.task.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#team_rfas" role="tab" data-toggle="tab">
-                {{ trans('cruds.rfa.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#team_file_managers" role="tab" data-toggle="tab">
-                {{ trans('cruds.fileManager.title') }}
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="team_users">
-            @includeIf('admin.teams.relationships.teamUsers', ['users' => $team->teamUsers])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="team_tasks">
-            @includeIf('admin.teams.relationships.teamTasks', ['tasks' => $team->teamTasks])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="team_rfas">
-            @includeIf('admin.teams.relationships.teamRfas', ['rfas' => $team->teamRfas])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="team_file_managers">
-            @includeIf('admin.teams.relationships.teamFileManagers', ['fileManagers' => $team->teamFileManagers])
-        </div>
-    </div>
-</div>
-
 @endsection

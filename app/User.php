@@ -63,11 +63,6 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at',
     ];
 
-    public function getIsAdminAttribute()
-    {
-        return $this->roles()->where('id', 1)->exists();
-    }
-
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -92,42 +87,12 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaConversion('thumb')->width(50)->height(50);
     }
 
-    public function issuebyRfas()
+    public function rfas()
     {
         return $this->hasMany(Rfa::class, 'issueby_id', 'id');
     }
 
-    public function assignRfas()
-    {
-        return $this->hasMany(Rfa::class, 'assign_id', 'id');
-    }
-
-    public function createByRfas()
-    {
-        return $this->hasMany(Rfa::class, 'create_by_id', 'id');
-    }
-
-    public function actionByRfas()
-    {
-        return $this->hasMany(Rfa::class, 'action_by_id', 'id');
-    }
-
-    public function commentByRfas()
-    {
-        return $this->hasMany(Rfa::class, 'comment_by_id', 'id');
-    }
-
-    public function informationByRfas()
-    {
-        return $this->hasMany(Rfa::class, 'information_by_id', 'id');
-    }
-
-    public function userCreateTasks()
-    {
-        return $this->hasMany(Task::class, 'user_create_id', 'id');
-    }
-
-    public function userUserAlerts()
+    public function userAlerts()
     {
         return $this->belongsToMany(UserAlert::class);
     }
@@ -189,10 +154,5 @@ class User extends Authenticatable implements HasMedia
     public function roles()
     {
         return $this->belongsToMany(Role::class);
-    }
-
-    public function indentures()
-    {
-        return $this->belongsToMany(Indenture::class);
     }
 }

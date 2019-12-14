@@ -51,7 +51,6 @@ return [
     'youAreLoggedIn'                       => 'You are logged in!',
     'yourAccountNeedsAdminApproval'        => 'Your accounts needs an administrator approval in order to log in',
     'submit'                               => 'Submit',
-    'relatedData'                          => 'Related Data',
     'datatables'                           => [
         'copy'          => 'Copy',
         'csv'           => 'CSV',
@@ -250,4 +249,13 @@ return [
     'no_alerts'                            => 'No alerts',
     'calendar'                             => 'Calendar',
     'messenger'                            => 'Messenger',
+    'user_fullname'                        => 'First name and Last name',
+    'pleaseSelectGender'                   => 'Please select Gender',
+    'pleaseSelectTeam'                   => 'Please select your Team',
+    'pleaseSelectPosition'                   => 'Please select Position',
+    'dob'                                  => 'Date of birth',
+    'workphone'                            => 'Phone number',
+    'task_name'                            => 'Task name : ',
+    'responsible'                          => 'Responsible : '
+    
 ];

@@ -27,12 +27,6 @@ class UpdateRfaRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'indentures.*' => [
-                'integer',
-            ],
-            'indentures'   => [
-                'array',
-            ],
         ];
     }
 }

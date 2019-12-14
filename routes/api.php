@@ -45,11 +45,4 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Tasks Calendars
     Route::apiResource('tasks-calendars', 'TasksCalendarApiController', ['except' => ['store', 'show', 'update', 'destroy']]);
-
-    // Indentures
-    Route::apiResource('indentures', 'IndentureApiController');
-
-    // File Managers
-    Route::post('file-managers/media', 'FileManagerApiController@storeMedia')->name('file-managers.storeMedia');
-    Route::apiResource('file-managers', 'FileManagerApiController');
 });

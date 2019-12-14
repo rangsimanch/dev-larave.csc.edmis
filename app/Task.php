@@ -41,13 +41,6 @@ class Task extends Model implements HasMedia
         'description',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-
-        Task::observe(new \App\Observers\TaskActionObserver);
-    }
-
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);
@@ -67,18 +60,26 @@ class Task extends Model implements HasMedia
     {
 <<<<<<< HEAD
         return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+<<<<<<< HEAD
 
         //return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
 =======
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
 >>>>>>> parent of 9634a6b... sprint1
+=======
+        //return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+>>>>>>> parent of 507f806... Indenture
     }
 
     public function setDueDateAttribute($value)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       //  $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
 
+=======
+       // $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d H:i:s') : null;
+>>>>>>> parent of 507f806... Indenture
         $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
 
 =======
@@ -91,10 +92,14 @@ class Task extends Model implements HasMedia
 <<<<<<< HEAD
         return $value ? Carbon::parse($value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
 
+<<<<<<< HEAD
        // return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
 =======
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
 >>>>>>> parent of 9634a6b... sprint1
+=======
+//        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+>>>>>>> parent of 507f806... Indenture
     }
 
     public function setEndDateAttribute($value)
@@ -112,6 +117,7 @@ class Task extends Model implements HasMedia
     {
         return $this->belongsTo(User::class, 'user_create_id');
     }
+<<<<<<< HEAD
 
     public function indentures()
     {
@@ -120,6 +126,9 @@ class Task extends Model implements HasMedia
 
 =======
 >>>>>>> parent of 9634a6b... sprint1
+=======
+    
+>>>>>>> parent of 507f806... Indenture
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');

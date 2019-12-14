@@ -25,9 +25,9 @@
                     <th width="10">
 
                     </th>
-                    <th>
+                    <!-- <th>
                         {{ trans('cruds.user.fields.id') }}
-                    </th>
+                    </th> -->
                     <th>
                         {{ trans('cruds.user.fields.img_user') }}
                     </th>
@@ -62,19 +62,15 @@
                         {{ trans('cruds.user.fields.approved') }}
                     </th>
                     <th>
-                        {{ trans('cruds.user.fields.indenture') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
             </thead>
         </table>
+
+
     </div>
 </div>
-
-
-
 @endsection
 @section('scripts')
 @parent
@@ -120,7 +116,7 @@
     ajax: "{{ route('admin.users.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
+//{ data: 'id', name: 'id' },
 { data: 'img_user', name: 'img_user', sortable: false, searchable: false },
 { data: 'name', name: 'name' },
 { data: 'dob', name: 'dob' },
@@ -132,7 +128,6 @@
 { data: 'email_verified_at', name: 'email_verified_at' },
 { data: 'roles', name: 'roles.title' },
 { data: 'approved', name: 'approved' },
-{ data: 'indenture', name: 'indentures.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],

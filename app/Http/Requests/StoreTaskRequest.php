@@ -44,6 +44,7 @@ class StoreTaskRequest extends FormRequest
             'user_create_id' => [
                 'integer',
             ],
+<<<<<<< HEAD
             'indentures.*'   => [
                 'integer',
             ],
@@ -52,6 +53,8 @@ class StoreTaskRequest extends FormRequest
             ],
 =======
 >>>>>>> parent of 9634a6b... sprint1
+=======
+>>>>>>> parent of 507f806... Indenture
         ];
     }
 }

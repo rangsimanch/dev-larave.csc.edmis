@@ -78,10 +78,15 @@ return [
             'jobtitle'                 => 'Jobtitle',
             'jobtitle_helper'          => '',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'indenture'                => 'Indenture',
             'indenture_helper'         => '',
 =======
 >>>>>>> parent of 9634a6b... sprint1
+=======
+            'user_create'        => 'User Create',
+            'user_create_helper' => '',
+>>>>>>> parent of 507f806... Indenture
         ],
     ],
     'jobtitle'               => [
@@ -238,10 +243,6 @@ return [
             'for_status_helper'      => '',
             'document_status'        => 'Document Status',
             'document_status_helper' => '',
-            'team'                   => 'Team',
-            'team_helper'            => '',
-            'indenture'              => 'Indenture',
-            'indenture_helper'       => '',
         ],
     ],
     'rfatype'                => [
@@ -359,12 +360,18 @@ return [
             'team'               => 'Team',
             'team_helper'        => '',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'user_create'        => 'User Create',
             'user_create_helper' => '',
             'indenture'          => 'Indenture',
             'indenture_helper'   => '',
 =======
 >>>>>>> parent of 9634a6b... sprint1
+=======
+            'user_create'       =>  'User Create',
+            'user_create_helper'       =>  '',
+
+>>>>>>> parent of 507f806... Indenture
         ],
     ],
     'tasksCalendar'          => [
@@ -378,51 +385,5 @@ return [
     'rfaCalendar'            => [
         'title'          => 'RFA Calendar',
         'title_singular' => 'RFA Calendar',
-    ],
-    'indenture'              => [
-        'title'          => 'Indenture',
-        'title_singular' => 'Indenture',
-        'fields'         => [
-            'id'                    => 'ID',
-            'id_helper'             => '',
-            'name'                  => 'Name',
-            'name_helper'           => '',
-            'code'                  => 'Code',
-            'code_helper'           => '',
-            'start_dk'              => 'Start Dk',
-            'start_dk_helper'       => '',
-            'destination_dk'        => 'Destination Dk',
-            'destination_dk_helper' => '',
-            'created_at'            => 'Created at',
-            'created_at_helper'     => '',
-            'updated_at'            => 'Updated at',
-            'updated_at_helper'     => '',
-            'deleted_at'            => 'Deleted at',
-            'deleted_at_helper'     => '',
-        ],
-    ],
-    'fileManager'            => [
-        'title'          => 'File Manager',
-        'title_singular' => 'File Manager',
-        'fields'         => [
-            'id'                 => 'ID',
-            'id_helper'          => '',
-            'file_name'          => 'File Name',
-            'file_name_helper'   => '',
-            'code'               => 'Code',
-            'code_helper'        => '',
-            'file_upload'        => 'File Upload',
-            'file_upload_helper' => '',
-            'created_at'         => 'Created at',
-            'created_at_helper'  => '',
-            'updated_at'         => 'Updated at',
-            'updated_at_helper'  => '',
-            'deleted_at'         => 'Deleted at',
-            'deleted_at_helper'  => '',
-            'indenture'          => 'Indenture',
-            'indenture_helper'   => '',
-            'team'               => 'Team',
-            'team_helper'        => '',
-        ],
     ],
 ];

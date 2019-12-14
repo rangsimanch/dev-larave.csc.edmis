@@ -320,46 +320,6 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '78',
                 'title' => 'rfa_calendar_access',
             ],
-            [
-                'id'    => '79',
-                'title' => 'indenture_create',
-            ],
-            [
-                'id'    => '80',
-                'title' => 'indenture_edit',
-            ],
-            [
-                'id'    => '81',
-                'title' => 'indenture_show',
-            ],
-            [
-                'id'    => '82',
-                'title' => 'indenture_delete',
-            ],
-            [
-                'id'    => '83',
-                'title' => 'indenture_access',
-            ],
-            [
-                'id'    => '84',
-                'title' => 'file_manager_create',
-            ],
-            [
-                'id'    => '85',
-                'title' => 'file_manager_edit',
-            ],
-            [
-                'id'    => '86',
-                'title' => 'file_manager_show',
-            ],
-            [
-                'id'    => '87',
-                'title' => 'file_manager_delete',
-            ],
-            [
-                'id'    => '88',
-                'title' => 'file_manager_access',
-            ],
         ];
 
         Permission::insert($permissions);

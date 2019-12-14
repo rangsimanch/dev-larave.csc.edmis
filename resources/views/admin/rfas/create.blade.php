@@ -9,9 +9,6 @@
     <div class="card-body">
         <form action="{{ route("admin.rfas.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
-
-            <!-- CEC ZONE -->
-            @can('rfa_document_cec')
             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                 <label for="title">{{ trans('cruds.rfa.fields.title') }}</label>
                 <input type="text" id="title" name="title" class="form-control" value="{{ old('title', isset($rfa) ? $rfa->title : '') }}">
@@ -126,6 +123,7 @@
                 </p>
             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             <div class="form-group">
                 <label for="indentures">{{ trans('cruds.rfa.fields.indenture') }}</label>
@@ -168,6 +166,8 @@
                 @endif
             </div>
 >>>>>>> parent of 9634a6b... sprint1
+=======
+>>>>>>> parent of 507f806... Indenture
             <div class="form-group {{ $errors->has('action_by_id') ? 'has-error' : '' }}">
                 <label for="action_by">{{ trans('cruds.rfa.fields.action_by') }}</label>
                 <select name="action_by_id" id="action_by" class="form-control select2">
@@ -231,12 +231,6 @@
                     {{ trans('cruds.rfa.fields.note_2_helper') }}
                 </p>
             </div>
-            @endcan
-            <!-- END CSC IN ZONE -->
-
-
-            <!-- CSC OUT ZONE -->
-            @can('rfa_document_csc_out')
             <div class="form-group {{ $errors->has('comment_status_id') ? 'has-error' : '' }}">
                 <label for="comment_status">{{ trans('cruds.rfa.fields.comment_status') }}</label>
                 <select name="comment_status_id" id="comment_status" class="form-control select2">
@@ -275,10 +269,6 @@
                     </em>
                 @endif
             </div>
-            @endcan
-            <!-- END CSC OUT ZONE -->
-
-
             <div class="form-group {{ $errors->has('document_status_id') ? 'has-error' : '' }}">
                 <label for="document_status">{{ trans('cruds.rfa.fields.document_status') }}</label>
                 <select name="document_status_id" id="document_status" class="form-control select2">
@@ -292,7 +282,6 @@
                     </em>
                 @endif
             </div>
-            
             <div>
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>
@@ -306,7 +295,7 @@
 @section('scripts')
 <script>
     var uploadedFileUpload1Map = {}
-    Dropzone.options.fileUpload1Dropzone = {
+Dropzone.options.fileUpload1Dropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 200, // MB
     addRemoveLinks: true,

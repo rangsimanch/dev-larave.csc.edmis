@@ -54,8 +54,6 @@ class PermissionsController extends Controller
     {
         abort_if(Gate::denies('permission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $permission->load('permissionsRoles');
-
         return view('admin.permissions.show', compact('permission'));
     }
 

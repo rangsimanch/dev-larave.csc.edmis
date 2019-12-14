@@ -231,34 +231,6 @@
                     </a>
                 </li>
             @endcan
-            @can('indenture_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.indentures.index") }}" class="nav-link {{ request()->is('admin/indentures') || request()->is('admin/indentures/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-atlas nav-icon">
-
-                        </i>
-                        {{ trans('cruds.indenture.title') }}
-                    </a>
-                </li>
-            @endcan
-            @can('file_manager_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.file-managers.index") }}" class="nav-link {{ request()->is('admin/file-managers') || request()->is('admin/file-managers/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-file-pdf nav-icon">
-
-                        </i>
-                        {{ trans('cruds.fileManager.title') }}
-                    </a>
-                </li>
-            @endcan
-            <li class="nav-item">
-                <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
-                    <i class="nav-icon fa-fw fas fa-calendar">
-
-                    </i>
-                    {{ trans('global.systemCalendar') }}
-                </a>
-            </li>
             @php($unread = \App\QaTopic::unreadCount())
                 <li class="nav-item">
                     <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is('admin/messenger') || request()->is('admin/messenger/*') ? 'active' : '' }} nav-link">

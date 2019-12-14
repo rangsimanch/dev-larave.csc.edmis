@@ -51,7 +51,6 @@ return [
     'youAreLoggedIn'                       => 'You are logged in!',
     'yourAccountNeedsAdminApproval'        => 'Your accounts needs an administrator approval in order to log in',
     'submit'                               => 'Submit',
-    'relatedData'                          => 'Related Data',
     'datatables'                           => [
         'copy'          => 'Copy',
         'csv'           => 'CSV',

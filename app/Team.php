@@ -25,23 +25,13 @@ class Team extends Model
         'deleted_at',
     ];
 
-    public function teamUsers()
+    public function users()
     {
         return $this->hasMany(User::class, 'team_id', 'id');
     }
 
-    public function teamTasks()
+    public function tasks()
     {
         return $this->hasMany(Task::class, 'team_id', 'id');
-    }
-
-    public function teamRfas()
-    {
-        return $this->hasMany(Rfa::class, 'team_id', 'id');
-    }
-
-    public function teamFileManagers()
-    {
-        return $this->hasMany(FileManager::class, 'team_id', 'id');
     }
 }
