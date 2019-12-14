@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRfaRequest;
 use App\Http\Requests\StoreRfaRequest;
 use App\Http\Requests\UpdateRfaRequest;
+use App\Indenture;
 use App\Rfa;
 use App\RfaCommentStatus;
 use App\RfaDocumentStatus;
@@ -25,7 +26,7 @@ class RfaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Rfa::with(['type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status'])->select(sprintf('%s.*', (new Rfa)->table));
+            $query = Rfa::with(['type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'indentures', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -118,7 +119,17 @@ class RfaController extends Controller
                 return $row->document_status ? $row->document_status->status_name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'issueby', 'assign', 'file_upload_1', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status']);
+            $table->editColumn('indenture', function ($row) {
+                $labels = [];
+
+                foreach ($row->indentures as $indenture) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $indenture->code);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'type', 'issueby', 'assign', 'file_upload_1', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'indenture']);
 
             return $table->make(true);
         }
@@ -148,16 +159,15 @@ class RfaController extends Controller
 
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rfas.create', compact('types', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses'));
+        $indentures = Indenture::all()->pluck('code', 'id');
+
+        return view('admin.rfas.create', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses', 'indentures'));
     }
 
     public function store(StoreRfaRequest $request)
     {
-
-        $rfa = $request->all();
-        $rfa['create_by_id'] = auth()->id();
-
-        Rfa::create($rfa);
+        $rfa = Rfa::create($request->all());
+        $rfa->indentures()->sync($request->input('indentures', []));
 
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
@@ -188,18 +198,19 @@ class RfaController extends Controller
 
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status');
+        $indentures = Indenture::all()->pluck('code', 'id');
+
+        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'indentures', 'team');
         $rfa['create_by_id'] = auth()->id();
 
-        return view('admin.rfas.edit', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses', 'rfa'));
+        return view('admin.rfas.edit', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses', 'indentures', 'rfa'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
-        $rfa = $request->all();
         $rfa['create_by_id'] = auth()->id();
-
         $rfa->update($request->all());
+        $rfa->indentures()->sync($request->input('indentures', []));
 
         if (count($rfa->file_upload_1) > 0) {
             foreach ($rfa->file_upload_1 as $media) {
@@ -224,7 +235,7 @@ class RfaController extends Controller
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status');
+        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'indentures', 'team');
 
         return view('admin.rfas.show', compact('rfa'));
     }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyTaskRequest;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Indenture;
 use App\Task;
 use App\TaskStatus;
 use App\TaskTag;
@@ -24,7 +25,7 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Task::with(['status', 'tags', 'user_create', 'team'])->select(sprintf('%s.*', (new Task)->table));
+            $query = Task::with(['status', 'tags', 'user_create', 'indentures', 'team'])->select(sprintf('%s.*', (new Task)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -44,12 +45,7 @@ class TaskController extends Controller
                     'row'
                 ));
             });
-            
-            
-            $table->addColumn('user_create_name', function ($row) {
-                return $row->user_create ? $row->user_create->name : '';
-            });
-            
+
             $table->addColumn('img_user', function ($row) {
                 if ($photo = $row->user_create->img_user) {
                     return sprintf(
@@ -88,10 +84,21 @@ class TaskController extends Controller
             $table->editColumn('attachment', function ($row) {
                 return $row->attachment ? '<a href="' . $row->attachment->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
             });
+            $table->addColumn('user_create_name', function ($row) {
+                return $row->user_create ? $row->user_create->name : '';
+            });
 
+            $table->editColumn('indenture', function ($row) {
+                $labels = [];
 
-            $table->rawColumns(['actions', 'placeholder','img_user' , 'status', 'tag', 'attachment', 'user_create']);
+                foreach ($row->indentures as $indenture) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $indenture->code);
+                }
 
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'img_user', 'status', 'tag', 'attachment', 'user_create', 'indenture']);
             return $table->make(true);
         }
 
@@ -106,7 +113,6 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
-
         return view('admin.tasks.create', compact('statuses', 'tags'));
     }
 
@@ -114,7 +120,13 @@ class TaskController extends Controller
     {
         $task = $request->all();
         $task['user_create_id'] = auth()->id();
+        $task->tags()->sync($request->input('tags', []));
+        $task->indentures()->sync($request->input('indentures', []));
+        
+
         Task::create($task);
+        
+
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
         }
@@ -122,7 +134,6 @@ class TaskController extends Controller
         if ($request->input('img_user', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
         }
-
         return redirect()->route('admin.tasks.index');
     }
 
@@ -134,9 +145,11 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
-        $task->load('status', 'tags', 'team');
-
         $task['user_create_id'] = auth()->id();
+
+        $task->load('status', 'tags', 'user_create', 'indentures', 'team');
+        
+       
 
         return view('admin.tasks.edit', compact('statuses', 'tags', 'task'));
     }
@@ -146,6 +159,7 @@ class TaskController extends Controller
         $task['user_create_id'] = auth()->id();
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
+        $task->indentures()->sync($request->input('indentures', []));
 
         if ($request->input('attachment', false)) {
             if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {
@@ -162,7 +176,7 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $task->load('status', 'tags', 'user_create', 'team');
+        $task->load('status', 'tags', 'user_create', 'indentures', 'team');
 
         return view('admin.tasks.show', compact('task'));
     }

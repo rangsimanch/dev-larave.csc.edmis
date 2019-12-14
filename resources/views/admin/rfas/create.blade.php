@@ -9,6 +9,9 @@
     <div class="card-body">
         <form action="{{ route("admin.rfas.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
+
+            <!-- CEC ZONE -->
+            @can('rfa_document_cec')
             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                 <label for="title">{{ trans('cruds.rfa.fields.title') }}</label>
                 <input type="text" id="title" name="title" class="form-control" value="{{ old('title', isset($rfa) ? $rfa->title : '') }}">
@@ -122,6 +125,33 @@
                     {{ trans('cruds.rfa.fields.file_upload_1_helper') }}
                 </p>
             </div>
+
+            <div class="form-group">
+                <label for="indentures">{{ trans('cruds.rfa.fields.indenture') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('indentures') ? 'is-invalid' : '' }}" name="indentures[]" id="indentures" multiple>
+                    @foreach($indentures as $id => $indenture)
+                        <option value="{{ $id }}" {{ in_array($id, old('indentures', [])) ? 'selected' : '' }}>{{ $indenture }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('indentures'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('indentures') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.rfa.fields.indenture_helper') }}</span>
+            </div>
+
+            @endcan
+
+            <!-- END CEC ZONE -->
+
+
+            <!-- CSC IN ZONE -->
+            @can('rfa_document_csc_in')
             <div class="form-group {{ $errors->has('action_by_id') ? 'has-error' : '' }}">
                 <label for="action_by">{{ trans('cruds.rfa.fields.action_by') }}</label>
                 <select name="action_by_id" id="action_by" class="form-control select2">
@@ -185,6 +215,12 @@
                     {{ trans('cruds.rfa.fields.note_2_helper') }}
                 </p>
             </div>
+            @endcan
+            <!-- END CSC IN ZONE -->
+
+
+            <!-- CSC OUT ZONE -->
+            @can('rfa_document_csc_out')
             <div class="form-group {{ $errors->has('comment_status_id') ? 'has-error' : '' }}">
                 <label for="comment_status">{{ trans('cruds.rfa.fields.comment_status') }}</label>
                 <select name="comment_status_id" id="comment_status" class="form-control select2">
@@ -223,6 +259,10 @@
                     </em>
                 @endif
             </div>
+            @endcan
+            <!-- END CSC OUT ZONE -->
+
+
             <div class="form-group {{ $errors->has('document_status_id') ? 'has-error' : '' }}">
                 <label for="document_status">{{ trans('cruds.rfa.fields.document_status') }}</label>
                 <select name="document_status_id" id="document_status" class="form-control select2">
@@ -236,6 +276,7 @@
                     </em>
                 @endif
             </div>
+            
             <div>
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
             </div>
@@ -249,7 +290,7 @@
 @section('scripts')
 <script>
     var uploadedFileUpload1Map = {}
-Dropzone.options.fileUpload1Dropzone = {
+    Dropzone.options.fileUpload1Dropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 200, // MB
     addRemoveLinks: true,

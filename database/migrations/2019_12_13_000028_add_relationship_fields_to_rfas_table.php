@@ -48,6 +48,10 @@ class AddRelationshipFieldsToRfasTable extends Migration
             $table->unsignedInteger('document_status_id')->nullable();
 
             $table->foreign('document_status_id', 'document_status_fk_594378')->references('id')->on('rfa_document_statuses');
+
+            $table->unsignedInteger('team_id')->nullable();
+
+            $table->foreign('team_id', 'team_fk_673427')->references('id')->on('teams');
         });
     }
 }

@@ -7,27 +7,28 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route("admin.permissions.update", [$permission->id]) }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form method="POST" action="{{ route("admin.permissions.update", [$permission->id]) }}" enctype="multipart/form-data">
             @method('PUT')
-            <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                <label for="title">{{ trans('cruds.permission.fields.title') }}*</label>
-                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', isset($permission) ? $permission->title : '') }}" required>
+            @csrf
+            <div class="form-group">
+                <label class="required" for="title">{{ trans('cruds.permission.fields.title') }}</label>
+                <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', $permission->title) }}" required>
                 @if($errors->has('title'))
-                    <em class="invalid-feedback">
+                    <div class="invalid-feedback">
                         {{ $errors->first('title') }}
-                    </em>
+                    </div>
                 @endif
-                <p class="helper-block">
-                    {{ trans('cruds.permission.fields.title_helper') }}
-                </p>
+                <span class="help-block">{{ trans('cruds.permission.fields.title_helper') }}</span>
             </div>
-            <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
             </div>
         </form>
-
-
     </div>
 </div>
+
+
+
 @endsection

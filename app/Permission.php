@@ -24,7 +24,7 @@ class Permission extends Model
         'deleted_at',
     ];
 
-    public function roles()
+    public function permissionsRoles()
     {
         return $this->belongsToMany(Role::class);
     }

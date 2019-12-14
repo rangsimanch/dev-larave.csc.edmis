@@ -25,4 +25,13 @@ class RfaActionObserver
         })->get();
         Notification::send($users, new DataChangeEmailNotification($data));
     }
+
+    public function deleting(Rfa $model)
+    {
+        $data  = ['action' => 'deleted', 'model_name' => 'Rfa'];
+        $users = \App\User::whereHas('roles', function ($q) {
+            return $q->where('title', 'Admin');
+        })->get();
+        Notification::send($users, new DataChangeEmailNotification($data));
+    }
 }

@@ -43,6 +43,12 @@ class StoreTaskRequest extends FormRequest
             'user_create_id' => [
                 'integer',
             ],
+            'indentures.*'   => [
+                'integer',
+            ],
+            'indentures'     => [
+                'array',
+            ],
         ];
     }
 }

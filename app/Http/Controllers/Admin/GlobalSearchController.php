@@ -9,7 +9,9 @@ use Illuminate\Support\Str;
 class GlobalSearchController extends Controller
 {
     private $models = [
-
+        'Rfa'         => 'cruds.rfa.title',
+        'Indenture'   => 'cruds.indenture.title',
+        'FileManager' => 'cruds.fileManager.title',
     ];
 
     public function search(Request $request)
